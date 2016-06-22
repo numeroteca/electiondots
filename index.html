@@ -1,19 +1,31 @@
 <!DOCTYPE html>
+<!-- via http://bl.ocks.org/tomgp/6fb9b8c93f86b24d6828 -->
 <html>
 <head>
-	<title>VARIOUS OUTCOMES ASSOCIATED WITH GROUP B STREP (GBS) AMONG PREGNANT WOMEN</title>
-	<script src="//d3js.org/d3.v4.0.0-alpha.18.min.js" charset="utf-8"></script>
+	<title>Elecciones 20D. </title>
+	<script src="http://d3js.org/d3.v4.0.0-alpha.18.min.js" charset="utf-8"></script>
 	<script type="text/javascript" src="d3-iconarray.js"></script>
 	<style type="text/css">
 	*{
 		font-family: sans-serif;
 		color: #333;
 	}
+	div.tooltip {   
+		position: absolute;             
+		width: 160px;                         
+		padding: 8px;             
+		font: 12px sans-serif;        
+		background: #ddd;   
+		border: 0px;      
+		border-radius: 4px;           
+		pointer-events: none;         
+	}
 	</style>
 </head>
 <body>
-<h1>Outcomes associated with group B strep (GBS) among pregnant women</h1>
-<p>after <a href="http://blogs.scientificamerican.com/sa-visual/inadequate-data-visualization-leaves-patients-undereducated/">Amanda Montañez</a></p>
+<h1>Elecciones 20D</h1>
+<p>C&oacute;digo a partir de <a href="http://bl.ocks.org/tomgp/6fb9b8c93f86b24d6828">Tom Pearson</a></p>
+<p>Cada punto representa a 10.000 habitantes</p>
 <div id="gbs-example">
 
 </div>
@@ -21,30 +33,96 @@
 <script type="text/javascript">
 
 var data = [
-	{
-		label:'Women who test negative for GBS',
-		count:402,
-		colour:'#6bbde9'
-	},
-	{
-		label:'Women who test positive but do not pass the bacteria to their babies',
-		count:49,
-		colour:'#0b95a3'
-	},
-	{
-		label:'Women who pass the bacteria to their babies without resulting illness',
-		count:48,
-		colour:'#ed7fa0'
-	},
-	{
-		label:'Women whose babies contract early onset GBS disease',
-		count:1,
-		colour:'#815a82'
-	}
+ {
+   "label":"Abstenciones",
+   "count":928,
+   "colour":"#dddddd"
+ },
+ {
+   "label":"PP",
+   "count":721,
+   "colour":"#397da0"
+ },
+ {
+   "label":"PSOE",
+   "count":553,
+   "colour":"#cc2630"
+ },
+ {
+   "label":"Podemos",
+   "count":519,
+   "colour":"#896897"
+ },
+ {
+   "label":"Ciudadanos",
+   "count":350,
+   "colour":"#fcbb5c"
+ },
+ {
+   "label":"DL",
+   "count":57,
+   "colour":"#002369"
+ },
+ {
+   "label":"ERC",
+   "count":60,
+   "colour":"#ffa31d"
+ },
+ {
+   "label":"PNV",
+   "count":30,
+   "colour":"#7aae30"
+ },
+ {
+   "label":"IU",
+   "count":92,
+   "colour":"#037b51"
+ },
+ {
+   "label":"Bildu",
+   "count":21,
+   "colour":"#666"
+ },
+ {
+   "label":"CC",
+   "count":8,
+   "colour":"#666"
+ },
+ {
+   "label":"Animalista",
+   "count":21,
+   "colour":"#666"
+ },
+ {
+   "label":"UPyD",
+   "count":15,
+   "colour":"#666"
+ },
+ {
+   "label":"BNG",
+   "count":7,
+   "colour":"#666"
+ },
+ {
+   "label":"Unio",
+   "count":6,
+   "colour":"#666"
+ },
+ {
+   "label":"Vox",
+   "count":6,
+   "colour":"#666"
+ },
+ {
+   "label":"Otros",
+   "count":22,
+   "colour":"#666"
+ }
 ];
 
 var layout = d3_iconarray.layout()
-	.width(25);
+	.width(70) //number of dots per line
+	.height(35);
 
 //expand the data to an array
 var dataArray = data.reduce(function(value, d){
@@ -56,13 +134,13 @@ var dataArray = data.reduce(function(value, d){
 
 var grid = layout(dataArray);
 
-var dotRadius = 7;
-var width = 800, 
-	height = 600, 
+var dotRadius = 5;
+var width = 1200, 
+	height = 1200, 
 	margin = {top:20, bottom:20, left:20, right:300 };
 
 var arrayScale = d3.scaleLinear()
-	.domain([ 0, 25 ])
+	.domain([ 0, 70 ]) //numer of gaps in every row
 	.range([0, width-(margin.left+margin.right)]);
 var svg = d3.select('#gbs-example')
 		.append('svg')
@@ -70,6 +148,9 @@ var svg = d3.select('#gbs-example')
 			.attr('height',height)
 		.append('g')
 			.attr('transform','translate('+margin.left+','+margin.top+')');
+var div = d3.select("body").append("div")   
+    .attr("class", "tooltip")               
+		.style("opacity", 0);
 
 svg.selectAll('circle')
 	.data(grid)
@@ -83,14 +164,29 @@ svg.selectAll('circle')
 		})
 		.attr('r',dotRadius)
 		.attr('fill',function(d){ return d.data; })
+		.on("mouseover", function(d) {      
+			div.transition()
+				.duration(200)      
+				.style("opacity", .9);      
+			div.html("10.000 personas")  
+				.style("left", (d3.event.pageX) + "px")     
+				.style("top", (d3.event.pageY) - 60 + "px");    
+					})                  
+			.on("mouseout", function(d) {       
+					div.transition()        
+				.duration(500)      
+				.style("opacity", 0);   
+			});
 
+
+//Legend?
 d3.select('#gbs-example svg')
-	.append('g').attr('transform','translate('+ (width-margin.right + 30)+',' + (margin.top + dotRadius) + ')')
+	.append('g').attr('transform','translate('+ (width-margin.right + 50)+',' + (margin.top + dotRadius) + ')')
 	.selectAll('g.key-element')
 	.data(data)
 		.enter()
 	.append('g')
-		.attr('transform',function(d,i){ return 'translate(0,'+(i*60)+')'; })
+		.attr('transform',function(d,i){ return 'translate(0,'+(i*20)+')'; })
 		.attr('class','key-element')
 	.call(function(parent){
 		parent.append('circle')
@@ -103,10 +199,11 @@ d3.select('#gbs-example svg')
 			.attr('dx', 0)
 			.attr('dy',0 )
 			.text(function(d){
-				return d.label;
+				return d.label + ' (' + d.count + ' x 10M hab)';
 			})
-			.call(wrap, margin.right-20);
+			.call(wrap, margin.right-10);
 	})
+
 
 //wrapping long labels https://bl.ocks.org/mbostock/7555321
 
@@ -137,175 +234,5 @@ function wrap(text, width) {
 d3.select(self.frameElement).style("height", (height + 200)+"px");
 
 </script>
+<p>Datos <a href="http://resultadosgenerales2015.interior.es/congreso/#/ES201512-CON-ES/ES">resultadosgenerales2015.interior.es</a>
 </html>
-
-d3-iconarray.js
-#
-
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-scale')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'd3-scale'], factory) :
-	(factory((global.d3_iconarray = global.d3_iconarray || {}),global.d3));
-}(this, function (exports,d3) { 'use strict';
-
-	function iconArrayLayout() {
-		var width = undefined;
-		var height = undefined;
-		var widthFirst = true;
-		var maxDimension = undefined;
-
-		function layout(data){
-			//work our missing height, width stuff
-
-			setDimensions(data.length);
-
-			return data.map(function(d,i){
-				return {
-					data:d,
-					position:position(i)
-				};
-			});
-		}
-
-		function position(i){
-			if(isNaN(width) || isNaN(height)){ 
-				console.log('Warning: width/height undefined') 
-				return 0;
-			}
-			if(widthFirst){
-				return {
-					x: i % width,
-					y: Math.floor( i/width )
-				};
-			}else{
-				return {
-					x: Math.floor( i/height ),
-					y: i % height
-				};
-			}
-		}
-
-		function setDimensions(l){
-			//neither width or height is defined
-			if(isNaN(width) && isNaN(height)){
-				console.log('no width or height');
-				if(widthFirst){ 
-					width = Math.ceil( Math.sqrt(l) );
-					height = Math.ceil( l / width );
-				}else{
-					height = Math.ceil( Math.sqrt(l) );
-					width = Math.ceil( l / height );
-				}
-			}else if(isNaN(width)){	//width undefined
-				width = Math.ceil( l / height );
-			}else if(isNaN(height)){ //height undefined
-				height = Math.ceil( l / width );
-			}
-		}
-
-		layout.maxDimension = function(x){
-			var itemPosition = position(x); 
-			if(widthFirst){
-				var x = Math.max(itemPosition.x, width);
-				return Math.max(x, itemPosition.y);
-			}
-			var y = Math.max(itemPosition.y, height);
-			return Math.max(y, itemPosition.x);
-
-		}
-
-		layout.position = function(x){
-			return position(x);
-		}
-
-		layout.width = function(x){
-			if(x === undefined) return width;
-			width = x;
-			return layout;
-		};
-
-		layout.height = function(x){
-			if(x === undefined) return height;
-			height = x;
-			return layout;
-		};
-
-		layout.widthFirst = function(b){
-			if(b === undefined) return widthFirst;
-			widthFirst = b;
-			return layout;
-		};
-
-		return layout;
-	};
-
-	function iconArrayScale(){
-
-		var domain = [0,100];
-		var range = [0,100];
-		var gapInterval = 10;
-		var gapSize = 0; //default no change
-		var notionalScale = d3.scaleLinear()
-								.domain(domain)
-								.range(range);
-
-		function scale(domainValue){
-			var rangeValue = 20;
-			var adjustedDomainValue = domainValue + Math.floor(domainValue/gapInterval)*gapSize;
-			//console.log(notionalScale.domain());
-			return rangeValue = notionalScale(adjustedDomainValue);		
-		}
-
-		function rescale(){
-			//calculate an adjusted domain
-			var domainLength = (domain[1] - domain[0]) * gapSize;
-			var gaps = Math.ceil( domainLength/ gapInterval );
-			var adjustedDomain = [ domain[0], domain[1] + gaps ];
-
-			//calculate an adjusted range
-
-			notionalScale.domain(adjustedDomain)
-					.range(range);
-		}
-
-		scale.gapInterval = function(x){
-			if(!x) return gapInterval;
-			gapInterval = x;
-			rescale();
-			return scale;
-		};
-
-		scale.gapSize = function(x){
-			if(isNaN(x)) return gapSize;
-			gapSize = x;
-			rescale();
-			return scale;
-		}
-
-		scale.domain = function(array){
-			if(!array) return domain;
-			domain = array;
-			rescale();
-			return scale;
-		};
-
-		scale.range = function(array){
-			if(!array) return range;
-			range = array;
-			rescale();
-			return scale;
-		};
-
-		rescale();
-		return scale; 
-	}
-
-	var version = "0.0.1";
-
-	exports.version = version;
-	exports.layout = iconArrayLayout;
-	exports.scale = iconArrayScale;
-
-}));
-
-
