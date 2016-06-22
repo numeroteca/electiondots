@@ -1,0 +1,14 @@
+	*{
+		font-family: sans-serif;
+		color: #333;
+	}
+	div.tooltip {   
+		position: absolute;             
+		width: 160px;                         
+		padding: 8px;             
+		font: 12px sans-serif;        
+		background: #ddd;   
+		border: 0px;      
+		border-radius: 4px;           
+		pointer-events: none;         
+	}
