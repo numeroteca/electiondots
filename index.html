@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VARIOUS OUTCOMES ASSOCIATED WITH GROUP B STREP (GBS) AMONG PREGNANT WOMEN</title>
+	<script src="//d3js.org/d3.v4.0.0-alpha.18.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="d3-iconarray.js"></script>
+	<style type="text/css">
+	*{
+		font-family: sans-serif;
+		color: #333;
+	}
+	</style>
+</head>
+<body>
+<h1>Outcomes associated with group B strep (GBS) among pregnant women</h1>
+<p>after <a href="http://blogs.scientificamerican.com/sa-visual/inadequate-data-visualization-leaves-patients-undereducated/">Amanda Montañez</a></p>
+<div id="gbs-example">
+
+</div>
+</body>
+<script type="text/javascript">
+
+var data = [
+	{
+		label:'Women who test negative for GBS',
+		count:402,
+		colour:'#6bbde9'
+	},
+	{
+		label:'Women who test positive but do not pass the bacteria to their babies',
+		count:49,
+		colour:'#0b95a3'
+	},
+	{
+		label:'Women who pass the bacteria to their babies without resulting illness',
+		count:48,
+		colour:'#ed7fa0'
+	},
+	{
+		label:'Women whose babies contract early onset GBS disease',
+		count:1,
+		colour:'#815a82'
+	}
+];
+
+var layout = d3_iconarray.layout()
+	.width(25);
+
+//expand the data to an array
+var dataArray = data.reduce(function(value, d){
+	    for(var i=0;i<d.count ;i++){
+	        value.push(d.colour);
+	    }
+	    return value;
+	}, []);
+
+var grid = layout(dataArray);
+
+var dotRadius = 7;
+var width = 800, 
+	height = 600, 
+	margin = {top:20, bottom:20, left:20, right:300 };
+
+var arrayScale = d3.scaleLinear()
+	.domain([ 0, 25 ])
+	.range([0, width-(margin.left+margin.right)]);
+var svg = d3.select('#gbs-example')
+		.append('svg')
+			.attr('width',width)
+			.attr('height',height)
+		.append('g')
+			.attr('transform','translate('+margin.left+','+margin.top+')');
+
+svg.selectAll('circle')
+	.data(grid)
+		.enter()
+	.append('circle')
+		.attr('cx', function(d){ 
+			return arrayScale(d.position.x); 
+		})
+		.attr('cy', function(d){ 
+			return arrayScale(d.position.y); 
+		})
+		.attr('r',dotRadius)
+		.attr('fill',function(d){ return d.data; })
+
+d3.select('#gbs-example svg')
+	.append('g').attr('transform','translate('+ (width-margin.right + 30)+',' + (margin.top + dotRadius) + ')')
+	.selectAll('g.key-element')
+	.data(data)
+		.enter()
+	.append('g')
+		.attr('transform',function(d,i){ return 'translate(0,'+(i*60)+')'; })
+		.attr('class','key-element')
+	.call(function(parent){
+		parent.append('circle')
+			.attr('r', dotRadius)
+			.attr('cx', -dotRadius*2)
+			.attr('cy', -dotRadius)	
+			.attr('fill', function(d){ return d.colour; })
+		
+		parent.append('text')
+			.attr('dx', 0)
+			.attr('dy',0 )
+			.text(function(d){
+				return d.label;
+			})
+			.call(wrap, margin.right-20);
+	})
+
+//wrapping long labels https://bl.ocks.org/mbostock/7555321
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
+
+d3.select(self.frameElement).style("height", (height + 200)+"px");
+
+</script>
+</html>
+
+d3-iconarray.js
+#
+
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-scale')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'd3-scale'], factory) :
+	(factory((global.d3_iconarray = global.d3_iconarray || {}),global.d3));
+}(this, function (exports,d3) { 'use strict';
+
+	function iconArrayLayout() {
+		var width = undefined;
+		var height = undefined;
+		var widthFirst = true;
+		var maxDimension = undefined;
+
+		function layout(data){
+			//work our missing height, width stuff
+
+			setDimensions(data.length);
+
+			return data.map(function(d,i){
+				return {
+					data:d,
+					position:position(i)
+				};
+			});
+		}
+
+		function position(i){
+			if(isNaN(width) || isNaN(height)){ 
+				console.log('Warning: width/height undefined') 
+				return 0;
+			}
+			if(widthFirst){
+				return {
+					x: i % width,
+					y: Math.floor( i/width )
+				};
+			}else{
+				return {
+					x: Math.floor( i/height ),
+					y: i % height
+				};
+			}
+		}
+
+		function setDimensions(l){
+			//neither width or height is defined
+			if(isNaN(width) && isNaN(height)){
+				console.log('no width or height');
+				if(widthFirst){ 
+					width = Math.ceil( Math.sqrt(l) );
+					height = Math.ceil( l / width );
+				}else{
+					height = Math.ceil( Math.sqrt(l) );
+					width = Math.ceil( l / height );
+				}
+			}else if(isNaN(width)){	//width undefined
+				width = Math.ceil( l / height );
+			}else if(isNaN(height)){ //height undefined
+				height = Math.ceil( l / width );
+			}
+		}
+
+		layout.maxDimension = function(x){
+			var itemPosition = position(x); 
+			if(widthFirst){
+				var x = Math.max(itemPosition.x, width);
+				return Math.max(x, itemPosition.y);
+			}
+			var y = Math.max(itemPosition.y, height);
+			return Math.max(y, itemPosition.x);
+
+		}
+
+		layout.position = function(x){
+			return position(x);
+		}
+
+		layout.width = function(x){
+			if(x === undefined) return width;
+			width = x;
+			return layout;
+		};
+
+		layout.height = function(x){
+			if(x === undefined) return height;
+			height = x;
+			return layout;
+		};
+
+		layout.widthFirst = function(b){
+			if(b === undefined) return widthFirst;
+			widthFirst = b;
+			return layout;
+		};
+
+		return layout;
+	};
+
+	function iconArrayScale(){
+
+		var domain = [0,100];
+		var range = [0,100];
+		var gapInterval = 10;
+		var gapSize = 0; //default no change
+		var notionalScale = d3.scaleLinear()
+								.domain(domain)
+								.range(range);
+
+		function scale(domainValue){
+			var rangeValue = 20;
+			var adjustedDomainValue = domainValue + Math.floor(domainValue/gapInterval)*gapSize;
+			//console.log(notionalScale.domain());
+			return rangeValue = notionalScale(adjustedDomainValue);		
+		}
+
+		function rescale(){
+			//calculate an adjusted domain
+			var domainLength = (domain[1] - domain[0]) * gapSize;
+			var gaps = Math.ceil( domainLength/ gapInterval );
+			var adjustedDomain = [ domain[0], domain[1] + gaps ];
+
+			//calculate an adjusted range
+
+			notionalScale.domain(adjustedDomain)
+					.range(range);
+		}
+
+		scale.gapInterval = function(x){
+			if(!x) return gapInterval;
+			gapInterval = x;
+			rescale();
+			return scale;
+		};
+
+		scale.gapSize = function(x){
+			if(isNaN(x)) return gapSize;
+			gapSize = x;
+			rescale();
+			return scale;
+		}
+
+		scale.domain = function(array){
+			if(!array) return domain;
+			domain = array;
+			rescale();
+			return scale;
+		};
+
+		scale.range = function(array){
+			if(!array) return range;
+			range = array;
+			rescale();
+			return scale;
+		};
+
+		rescale();
+		return scale; 
+	}
+
+	var version = "0.0.1";
+
+	exports.version = version;
+	exports.layout = iconArrayLayout;
+	exports.scale = iconArrayScale;
+
+}));
+
+
