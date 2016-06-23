@@ -2,7 +2,7 @@ var layout = d3_iconarray.layout()
 	.width(70) //number of dots per line
 	.height(35);
 
-var dotRadius = 5;
+var dotRadius = 6;
 var width = 1200, 
 	height = 700, 
 	margin = {top:20, bottom:20, left:20, right:300 };
@@ -21,7 +21,7 @@ var div = d3.select("body").append("div")
 		.style("opacity", 0);
 
 
-d3.json("data/votos-limpios-20d_cataluna.json", function (error, data) {
+d3.json("data/votos-limpios-20d_espana.json", function (error, data) {
 	//expand the data to an array
 	var dataArray = data.reduce(function(value, d){
 			  for(var i=0;i<d.count ;i++){
@@ -29,8 +29,10 @@ d3.json("data/votos-limpios-20d_cataluna.json", function (error, data) {
 			  }
 			  return value;
 		}, []);
+	console.log(dataArray);
 
 	var grid = layout(dataArray);
+	console.log(grid);
 
 	svg.selectAll('circle')
 		.data(grid)
@@ -50,7 +52,7 @@ d3.json("data/votos-limpios-20d_cataluna.json", function (error, data) {
 					.style("opacity", .9);      
 				div.html("10.000 personas")  
 					.style("left", (d3.event.pageX) + "px")     
-					.style("top", (d3.event.pageY) - 60 + "px");    
+					.style("top", (d3.event.pageY) - 4 + "px");    
 						})                  
 				.on("mouseout", function(d) {       
 						div.transition()        
