@@ -1,5 +1,5 @@
 var layout = d3_iconarray.layout()
-	.width(70) //number of dots per line
+	.width(70) //number of dots per line 70
 	.height(35);
 
 var dotRadius = 6;
@@ -10,7 +10,7 @@ var width = 1200,
 var arrayScale = d3.scaleLinear()
 	.domain([ 0, 70 ]) //numer of gaps in every row
 	.range([0, width-(margin.left+margin.right)]);
-var svg = d3.select('#gbs-example')
+var svg = d3.select('#dataviz')
 		.append('svg')
 			.attr('width',width)
 			.attr('height',height)
@@ -20,8 +20,8 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")               
 		.style("opacity", 0);
 
-
 d3.json("data/votos-limpios-20d_espana.json", function (error, data) {
+	//data/votos-limpios-20d_espana.json, //data/votos-limpios-20d_cataluna.json
 	//expand the data to an array
 	var dataArray = data.reduce(function(value, d){
 			  for(var i=0;i<d.count ;i++){
@@ -61,7 +61,7 @@ d3.json("data/votos-limpios-20d_espana.json", function (error, data) {
 				});
 
 //Legend?
-d3.select('#gbs-example svg')
+d3.select('#dataviz svg')
 	.append('g').attr('transform','translate('+ (width-margin.right + 50)+',' + (margin.top + dotRadius) + ')')
 	.selectAll('g.key-element')
 	.data(data)
