@@ -1,104 +1,6 @@
-var data = [
- {
-   "label":"Abstenciones",
-   "count":154,
-   "colour":"#dddddd"
- },
- {
-   "label":"PP",
-   "count":42,
-   "colour":"#397da0"
- },
- {
-   "label":"PSOE",
-   "count":59,
-   "colour":"#cc2630"
- },
- {
-   "label":"Podemos",
-   "count":93,
-   "colour":"#896897"
- },
- {
-   "label":"Ciudadanos",
-   "count":49,
-   "colour":"#fcbb5c"
- },
- {
-   "label":"ERC",
-   "count":60,
-   "colour":"#dc9700"
- },
- {
-   "label":"DL",
-   "count":57,
-   "colour":"#002369"
- },
- {
-   "label":"PNV",
-   "count":null,
-   "colour":"#7aae30"
- },
- {
-   "label":"IU",
-   "count":null,
-   "colour":"#037b51"
- },
- {
-   "label":"Bildu",
-   "count":null,
-   "colour":"#666"
- },
- {
-   "label":"CC",
-   "count":null,
-   "colour":"#666"
- },
- {
-   "label":"Animalista",
-   "count":4,
-   "colour":"#666"
- },
- {
-   "label":"UPyD",
-   "count":8,
-   "colour":"#666"
- },
- {
-   "label":"BNG",
-   "count":null,
-   "colour":"#666"
- },
- {
-   "label":"Unio",
-   "count":6,
-   "colour":"#666"
- },
- {
-   "label":"Vox",
-   "count":0,
-   "colour":"#666"
- },
- {
-   "label":"Otros",
-   "count":3,
-   "colour":"#666"
- }
-];
-
 var layout = d3_iconarray.layout()
 	.width(70) //number of dots per line
 	.height(35);
-
-//expand the data to an array
-var dataArray = data.reduce(function(value, d){
-	    for(var i=0;i<d.count ;i++){
-	        value.push(d.colour);
-	    }
-	    return value;
-	}, []);
-
-var grid = layout(dataArray);
 
 var dotRadius = 5;
 var width = 1200, 
@@ -118,32 +20,43 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")               
 		.style("opacity", 0);
 
-svg.selectAll('circle')
-	.data(grid)
-		.enter()
-	.append('circle')
-		.attr('cx', function(d){ 
-			return arrayScale(d.position.x); 
-		})
-		.attr('cy', function(d){ 
-			return arrayScale(d.position.y); 
-		})
-		.attr('r',dotRadius)
-		.attr('fill',function(d){ return d.data; })
-		.on("mouseover", function(d) {      
-			div.transition()
-				.duration(200)      
-				.style("opacity", .9);      
-			div.html("10.000 personas")  
-				.style("left", (d3.event.pageX) + "px")     
-				.style("top", (d3.event.pageY) - 60 + "px");    
-					})                  
-			.on("mouseout", function(d) {       
-					div.transition()        
-				.duration(500)      
-				.style("opacity", 0);   
-			});
 
+d3.json("data/votos-limpios-20d_cataluna.json", function (error, data) {
+	//expand the data to an array
+	var dataArray = data.reduce(function(value, d){
+			  for(var i=0;i<d.count ;i++){
+			      value.push(d.colour);
+			  }
+			  return value;
+		}, []);
+
+	var grid = layout(dataArray);
+
+	svg.selectAll('circle')
+		.data(grid)
+			.enter()
+		.append('circle')
+			.attr('cx', function(d){ 
+				return arrayScale(d.position.x); 
+			})
+			.attr('cy', function(d){ 
+				return arrayScale(d.position.y); 
+			})
+			.attr('r',dotRadius)
+			.attr('fill',function(d){ return d.data; })
+			.on("mouseover", function(d) {      
+				div.transition()
+					.duration(200)      
+					.style("opacity", .9);      
+				div.html("10.000 personas")  
+					.style("left", (d3.event.pageX) + "px")     
+					.style("top", (d3.event.pageY) - 60 + "px");    
+						})                  
+				.on("mouseout", function(d) {       
+						div.transition()        
+					.duration(500)      
+					.style("opacity", 0);   
+				});
 
 //Legend?
 d3.select('#gbs-example svg')
@@ -170,9 +83,7 @@ d3.select('#gbs-example svg')
 			.call(wrap, margin.right-10);
 	})
 
-
 //wrapping long labels https://bl.ocks.org/mbostock/7555321
-
 function wrap(text, width) {
   text.each(function() {
     var text = d3.select(this),
@@ -198,3 +109,7 @@ function wrap(text, width) {
 }
 
 d3.select(self.frameElement).style("height", (height + 200)+"px");
+});	
+
+
+
