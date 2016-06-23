@@ -2,86 +2,115 @@
  {
    "label":"Abstenciones",
    "count":928,
-   "colour":"#dddddd"
+   "colour":"#dddddd",
+   "votes":9280639
+ },
+ {
+   "label":"Nulos",
+   "count":23,
+   "colour":"#000",
+   "votes":226997
+ },
+ {
+   "label":"Blancos",
+   "count":19,
+   "colour":"#FFF",
+   "votes":187771
  },
  {
    "label":"PP",
-   "count":721,
-   "colour":"#397da0"
+   "count":722,
+   "colour":"#397da0",
+   "votes":7215752
  },
  {
    "label":"PSOE",
    "count":553,
-   "colour":"#cc2630"
+   "colour":"#cc2630",
+   "votes":5530779
  },
  {
    "label":"Podemos",
    "count":519,
-   "colour":"#896897"
+   "colour":"#896897",
+   "votes":5189463
  },
  {
    "label":"Ciudadanos",
    "count":350,
-   "colour":"#fcbb5c"
+   "colour":"#fcbb5c",
+   "votes":3500541
  },
  {
    "label":"ERC",
    "count":60,
-   "colour":"#dc9700"
+   "colour":"#dc9700",
+   "votes":599289
  },
  {
    "label":"DL",
    "count":57,
-   "colour":"#002369"
+   "colour":"#002369",
+   "votes":565501
  },
  {
-   "label":"PNV",
+   "label":"EAJ-PNV",
    "count":30,
-   "colour":"#7aae30"
+   "colour":"#7aae30",
+   "votes":301585
  },
  {
    "label":"IU",
    "count":92,
-   "colour":"#037b51"
+   "colour":"#037b51",
+   "votes":923133
  },
  {
    "label":"Bildu",
-   "count":21,
-   "colour":"#666"
+   "count":22,
+   "colour":"#666",
+   "votes":218467
  },
  {
    "label":"CC",
    "count":8,
-   "colour":"#666"
+   "colour":"#666",
+   "votes":81750
  },
  {
    "label":"Animalista",
-   "count":21,
-   "colour":"#666"
+   "count":22,
+   "colour":"#666",
+   "votes":219191
  },
  {
    "label":"UPyD",
    "count":15,
-   "colour":"#666"
+   "colour":"#666",
+   "votes":153505
  },
  {
-   "label":"BNG",
+   "label":"BNG-CG-FOGA-PCPG-PG",
    "count":7,
-   "colour":"#666"
+   "colour":"#666",
+   "votes":70464
  },
  {
-   "label":"Unio",
+   "label":"Unió",
    "count":6,
-   "colour":"#666"
+   "colour":"#666",
+   "votes":64726
  },
  {
-   "label":"Vox",
+   "label":"VOX",
    "count":6,
-   "colour":"#666"
+   "colour":"#666",
+   "votes":57753
  },
  {
    "label":"Otros",
-   "count":22,
-   "colour":"#666"
+   "count":24,
+   "colour":"#666",
+   "votes":243780
  }
 ]
