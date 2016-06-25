@@ -1,3 +1,12 @@
+*{
+	font-family: sans-serif;
+	color: #333;
+}
+
+body {
+	
+}
+
 div.tooltip {   
 	position: absolute;
 	color: #fff;            
@@ -11,4 +20,7 @@ div.tooltip {
 }
 circle {
 	cursor:pointer;
+}
+.legend {
+	font-size:14px;
 }

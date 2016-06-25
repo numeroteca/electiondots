@@ -1,116 +1,116 @@
 [
  {
    "label":"Abstenciones",
-   "count":928,
+   "count":25,
    "colour":"#dddddd",
-   "votes":9280639
+   "Asturias":252233
  },
  {
    "label":"Nulos",
-   "count":23,
+   "count":0,
    "colour":"#000",
-   "votes":226997
+   "Asturias":5131
  },
  {
    "label":"Blancos",
-   "count":19,
+   "count":0,
    "colour":"#FFF",
-   "votes":187771
+   "Asturias":5553
  },
  {
    "label":"PP",
-   "count":722,
+   "count":18,
    "colour":"#397da0",
-   "votes":7215752
+   "Asturias":186586
  },
  {
    "label":"PSOE",
-   "count":553,
+   "count":14,
    "colour":"#cc2630",
-   "votes":5530779
+   "Asturias":144017
  },
  {
    "label":"Podemos",
-   "count":519,
+   "count":13,
    "colour":"#896897",
-   "votes":5189463
+   "Asturias":132007
  },
  {
    "label":"Ciudadanos",
-   "count":350,
+   "count":8,
    "colour":"#fcbb5c",
-   "votes":3500541
+   "Asturias":83885
  },
  {
    "label":"ERC",
-   "count":60,
+   "count":0,
    "colour":"#dc9700",
-   "votes":599289
+   "Asturias":null
  },
  {
    "label":"DL",
-   "count":57,
+   "count":0,
    "colour":"#002369",
-   "votes":565501
+   "Asturias":null
  },
  {
    "label":"EAJ-PNV",
-   "count":30,
+   "count":0,
    "colour":"#7aae30",
-   "votes":301585
+   "Asturias":null
  },
  {
    "label":"IU",
-   "count":92,
+   "count":5,
    "colour":"#037b51",
-   "votes":923133
+   "Asturias":52316
  },
  {
    "label":"Bildu",
-   "count":22,
+   "count":0,
    "colour":"#666",
-   "votes":218467
+   "Asturias":null
  },
  {
    "label":"CC",
-   "count":8,
+   "count":0,
    "colour":"#666",
-   "votes":81750
+   "Asturias":null
  },
  {
    "label":"Animalista",
-   "count":22,
+   "count":0,
    "colour":"#666",
-   "votes":219191
+   "Asturias":4482
  },
  {
    "label":"UPyD",
-   "count":15,
+   "count":0,
    "colour":"#666",
-   "votes":153505
+   "Asturias":3792
  },
  {
-   "label":"BNG-CG-FOGA-...",
-   "count":7,
+   "label":"BNG-CG-FOGA-PCPG-PG",
+   "count":0,
    "colour":"#666",
-   "votes":70464
+   "Asturias":null
  },
  {
    "label":"Unió",
-   "count":6,
+   "count":0,
    "colour":"#666",
-   "votes":64726
+   "Asturias":null
  },
  {
    "label":"VOX",
-   "count":6,
+   "count":0,
    "colour":"#666",
-   "votes":57753
+   "Asturias":1684
  },
  {
    "label":"Otros",
-   "count":24,
+   "count":0,
    "colour":"#666",
-   "votes":243780
+   "Asturias":4484
  }
 ]

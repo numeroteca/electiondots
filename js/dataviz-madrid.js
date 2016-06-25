@@ -1,5 +1,5 @@
 var layout = d3_iconarray.layout()
-	.width(70) //number of dots per line 70
+	.width(25) //number of dots per line 70
 	.height(35);
 
 var dotRadius = 6;
@@ -10,7 +10,7 @@ var width = 1300,
 var arrayScale = d3.scaleLinear()
 	.domain([ 0, 70 ]) //numer of gaps in every row
 	.range([0, width-(margin.left+margin.right)]);
-var svg = d3.select('#dataviz')
+var svg = d3.select('#datavizmadrid')
 		.append('svg')
 			.attr('width',width)
 			.attr('height',height)
@@ -20,7 +20,7 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip")               
 		.style("opacity", 0);
 
-d3.json("data/votos-limpios-20d_espana.json", function (error, data) {
+d3.json("data/votos-limpios-20d_madrid.json", function (error, data) {
 	//data/votos-limpios-20d_espana.json, //data/votos-limpios-20d_cataluna.json
 	//expand the data to an array
 	var dataArray = data.reduce(function(value, d){
@@ -45,23 +45,10 @@ d3.json("data/votos-limpios-20d_espana.json", function (error, data) {
 				return arrayScale(d.position.y); 
 			})
 			.attr('r',dotRadius)
-			.attr('fill',function(d){ return d.data; })
-			.on("mouseover", function(d) {      
-				div.transition()
-					.duration(200)      
-					.style("opacity", .9);      
-				div.html("10.000 personas")  
-					.style("left", (d3.event.pageX) + "px")     
-					.style("top", (d3.event.pageY) - 4 + "px");    
-						})                  
-				.on("mouseout", function(d) {       
-						div.transition()        
-					.duration(500)      
-					.style("opacity", 0);   
-				});
+			.attr('fill',function(d){ return d.data; });
 
 //Legend
-d3.select('#dataviz svg')
+d3.select('#datavizmadrid svg')
 	.append('g').attr('transform','translate('+ (width-margin.right + 50)+',' + (margin.top + dotRadius) + ')')
 	.selectAll('g.key-element')
 	.data(data)
